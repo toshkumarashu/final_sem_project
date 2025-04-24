@@ -17,7 +17,7 @@ const Home = () => {
   const { isAuthenticated } = useAuth();
   const { trendingNews, availableSymbols } = useStock();
   const [featuredStocks, setFeaturedStocks] = useState([]);
-
+  // console.log(trendingNews)
   useEffect(() => {
     // Set featured stocks from available symbols
     if (availableSymbols && availableSymbols.length > 0) {
@@ -31,7 +31,7 @@ const Home = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container">
-          <div className="hero-content">
+          <div className="hero-content">  
             <h1 className="hero-title">
               Smart Financial Analysis at Your Fingertips
             </h1>

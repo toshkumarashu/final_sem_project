@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   FaNewspaper,
   FaSearch,
@@ -19,7 +20,7 @@ const News = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
-
+  const [filteredNews, setFilteredNews] = useState([])
   // Categories for filtering
   const categories = [
     { id: "all", name: "All News" },
@@ -42,15 +43,18 @@ const News = () => {
 
     try {
       const data = await newsApi.getLatestNews(30);
+      console.log(data)
+      console.log("hi")
       setNewsItems(data);
+      setLoading(false)
     } catch (error) {
       console.error("Error fetching news:", error);
       setError("Failed to load news. Please try again.");
 
-      // Set mock data for development/demo
+  //     // Set mock data for development/demo
       setNewsItems(generateMockNews());
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -93,24 +97,36 @@ const News = () => {
       setLoading(false);
     }
   };
+  // const fetchNews = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:8000/api/news/"); // update if hosted elsewhere
+  //     const data = response.data;
+
+  //     // Transform the API response
+  //     const transformed = Object.entries(data).flatMap(([source, feed]) =>
+  //       (feed.news || []).map((article, index) => ({
+  //         _id: `${source}-${index}`,
+  //         image: article.thumbnail || null,
+  //         source: feed.feed_title || source,
+  //         date: article.published || "N/A",
+  //         headline: article.title,
+  //         summary: article.summary || "", // optional
+  //         url: article.link
+  //       }))
+  //     );
+  //     // const filteredNews = transformed
+  //     setFilteredNews(transformed);
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError("Failed to fetch news.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Filter news based on active category
-  const filteredNews =
-    activeCategory === "all"
-      ? newsItems
-      : newsItems.filter((item) => {
-          // Check if the category matches in headline, summary, or tags
-          const categoryText = activeCategory.toLowerCase();
-          const headline = (item.headline || "").toLowerCase();
-          const summary = (item.summary || "").toLowerCase();
-          const source = (item.source || "").toLowerCase();
-
-          return (
-            headline.includes(categoryText) ||
-            summary.includes(categoryText) ||
-            source.includes(categoryText)
-          );
-        });
+  
+    
 
   // Format publication date
   const formatDate = (dateString) => {
@@ -296,9 +312,9 @@ const News = () => {
               </div>
             )}
 
-            {filteredNews.length > 0 ? (
+            {newsItems.length > 0 ? (
               <div className="news-grid">
-                {filteredNews.map((article) => (
+                {newsItems.map((article) => (
                   <Card key={article._id} className="news-card">
                     {article.image ? (
                       <div className="news-image">

@@ -5,7 +5,9 @@ from datetime import datetime
 from typing import Dict, List, Optional
 from bson import ObjectId
 from app.core.database import get_database
-
+from app.api.news1 import (
+    get_all_news
+)
 async def save_news_articles(articles: List[Dict]) -> bool:
     """
     Save news articles to database
@@ -50,21 +52,24 @@ async def get_latest_news(limit: int = 20, offset: int = 0, symbol: Optional[str
     Returns:
         List of news articles
     """
-    db = await get_database()
+    print("get_all_news")
+    articles = get_all_news()
+    return articles
+    # db = await get_database()
     
-    # Build query
-    query = {}
-    if symbol:
-        query["symbol"] = symbol
+    # # Build query
+    # query = {}
+    # if symbol:
+    #     query["symbol"] = symbol
     
-    # Execute query
-    cursor = db.news.find(query).sort("date", -1).skip(offset).limit(limit)
+    # # Execute query
+    # cursor = db.news.find(query).sort("date", -1).skip(offset).limit(limit)
     
-    # Process results
-    articles = []
-    async for article in cursor:
-        article["_id"] = str(article["_id"])
-        articles.append(article)
+    # # Process results
+    # articles = []
+    # async for article in cursor:
+    #     article["_id"] = str(article["_id"])
+    #     articles.append(article)
     
     return articles
 

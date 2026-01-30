@@ -147,7 +147,7 @@ Before you begin, ensure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/abhishek-kr01/FinFetch.git
+   git clone https://github.com/toshkumarashu/final_sem_project.git
    cd financial-app
    ```
 
@@ -573,7 +573,7 @@ FinFetch uses MongoDB with the following collections:
 }
 ```
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions to FinFetch are welcome! Please follow these steps:
 
@@ -593,7 +593,7 @@ Please ensure your code follows the project's style guidelines and includes appr
 - Use functional components and hooks for React components
 - Write unit tests for new functionality
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 FinFetch makes use of the following open-source projects and APIs:
 
